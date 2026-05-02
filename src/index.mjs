@@ -243,8 +243,13 @@ function holdOpen(ms = HOLD_OPEN_MS) {
 // Bootstrap
 // ============================================
 async function main() {
-  // Cuando pkg empaqueta, argv[0]=exe, argv[1]=primera URL/flag pasada por Windows.
-  const args = process.argv.slice(typeof process.pkg !== 'undefined' ? 1 : 2);
+  // En builds con `pkg`, algunas versiones exponen el entrypoint interno
+  // (`C:\snapshot\dist\print-assistant.cjs`) dentro de process.argv. Ese valor
+  // no es un argumento real del usuario y debe ignorarse, o el doble-click /
+  // el instalador muestran "Argumento no reconocido".
+  const args = process.argv
+    .slice(2)
+    .filter((arg) => !/^([a-z]:)?[\\/]+snapshot[\\/]/i.test(arg));
 
   if (args.length === 0) {
     return runIdleMenu();
@@ -261,9 +266,10 @@ async function main() {
     return handleDeeplink(first);
   }
 
-  logError('Argumento no reconocido:', first);
-  await holdOpen();
-  process.exit(64);
+  // Si Windows/pkg nos pasa algun argumento no esperado, abrimos el menu en vez
+  // de fallar. Es mejor para clientes: siempre ven una pantalla accionable.
+  logError('Argumento no reconocido, abriendo menu:', first);
+  return runIdleMenu();
 }
 
 main().catch(async (err) => {
