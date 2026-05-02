@@ -6,3 +6,7 @@ config.json
 # Instalador compilado: se distribuye desde rapiweb-landing/public/downloads/
 # Para regenerarlo seguir las instrucciones de installer/README.md
 installer/output/
+
+# Mensajes de commit temporales
+.commit-msg.tmp
+

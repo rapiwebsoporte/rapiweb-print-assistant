@@ -1,6 +1,6 @@
 {
   "name": "rapiweb-print-assistant",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "RapiWeb Print Assistant v2 - Handler del protocolo rapiweb-print:// para impresion termica desde el panel web sin requerir servidor HTTP local.",
   "main": "src/index.mjs",
   "type": "module",

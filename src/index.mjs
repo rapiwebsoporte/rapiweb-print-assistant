@@ -20,10 +20,10 @@
 import readline from 'node:readline';
 import { parseDeeplink } from './protocol.mjs';
 import { fetchJob, ackJob } from './api-client.mjs';
-import { listPrinters, printText, printRaw, generateTicketContent } from './printer.mjs';
+import { listPrinters, printText, dispatchPrint, generateReceiptContent } from './printer.mjs';
 import { loadConfig, saveConfig, getConfigPath, getAppRoot } from './config.mjs';
 
-const APP_VERSION = '2.0.0';
+const APP_VERSION = '2.1.0';
 const HOLD_OPEN_MS = 4000; // tiempo que la ventana queda visible al terminar
 
 // ============================================
@@ -81,14 +81,11 @@ async function handleDeeplink(rawUrl) {
   log(`[print-assistant] job recibido (tipo: ${job.ticket_type})`);
 
   try {
-    const payload = job.payload || {};
-    if (payload.raw && (payload.raw.base64 || typeof payload.raw === 'string')) {
-      const base64 = typeof payload.raw === 'string' ? payload.raw : payload.raw.base64;
-      await printRaw({ printerName: config.printerName, base64 });
-    } else {
-      const content = generateTicketContent(payload, config.paperWidth || 58);
-      await printText({ printerName: config.printerName, content });
-    }
+    await dispatchPrint({
+      ticketType: job.ticket_type,
+      payload: job.payload || {},
+      config,
+    });
     log('[print-assistant] impresion enviada a:', config.printerName);
 
     try {
@@ -203,7 +200,7 @@ async function runPrintTest() {
     paymentMethod: 'Test',
   };
   try {
-    const content = generateTicketContent(sample, config.paperWidth || 58);
+    const content = generateReceiptContent(sample, config.paperWidth || 58);
     await printText({ printerName: config.printerName, content });
     log('Trabajo enviado a:', config.printerName);
   } catch (err) {

@@ -5,7 +5,7 @@
 
 #define MyAppName        "RapiWeb Print Assistant"
 #define MyAppShortName   "RapiWebPrintAssistant"
-#define MyAppVersion     "2.0.0"
+#define MyAppVersion     "2.1.0"
 #define MyAppPublisher   "RapiWeb"
 #define MyAppURL         "https://rapiweb.ar"
 #define MyAppExeName     "RapiWebPrintAssistant.exe"
