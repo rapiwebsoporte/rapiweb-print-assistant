@@ -23,7 +23,7 @@ import { fetchJob, ackJob } from './api-client.mjs';
 import { listPrinters, printText, dispatchPrint, generateReceiptContent } from './printer.mjs';
 import { loadConfig, saveConfig, getConfigPath, getAppRoot } from './config.mjs';
 
-const APP_VERSION = '2.1.0';
+const APP_VERSION = '2.1.1';
 const HOLD_OPEN_MS = 4000; // tiempo que la ventana queda visible al terminar
 
 // ============================================

@@ -7,6 +7,7 @@ A diferencia de la v1 (que levantaba un servidor en `localhost:9100`), esta vers
 ## Versiones
 
 - **v2.1.0** - Soporte completo: tickets de venta, comandas de cocina, **facturas AFIP via ESC/POS RAW** con QR fiscal nativo. Generacion estandarizada por `ticket_type`.
+- **v2.1.1** - UX cliente: impresion en segundo plano sin ventana de consola, configurador grafico WinForms e icono propio del instalador.
 - **v2.0.0** - Initial release: protocolo `rapiweb-print://` + tickets de venta.
 
 ## Arquitectura
@@ -43,6 +44,8 @@ A diferencia de la v1 (que levantaba un servidor en `localhost:9100`), esta vers
 - `src/printer.mjs` - dispatcher + generadores (texto/ESC-POS) + Windows ops.
 - `src/escpos.mjs` - builder de comandos ESC/POS estandar (init, align, bold, size, qr, cut).
 - `src/config.mjs` - load/save de `config.json` junto al ejecutable.
+- `installer/protocol-runner.vbs` - launcher oculto usado por el protocolo `rapiweb-print://` para no mostrar consola al imprimir.
+- `installer/config-ui.ps1` - ventana grafica Windows Forms para elegir impresora/ancho y probar impresion.
 
 ## Contrato del payload por `ticket_type`
 
@@ -167,9 +170,10 @@ El `.exe` (~38 MB) se empaqueta dentro del instalador (`installer/`) que se dist
 Ver `installer/RapiWebPrintAssistantSetup.iss`. Compila con [Inno Setup](https://jrsoftware.org/isinfo.php). El instalador hace:
 
 1. Copia `RapiWebPrintAssistant.exe` a `%LOCALAPPDATA%\RapiWeb\PrintAssistant\`.
-2. Registra el protocolo `rapiweb-print://` en `HKCU\Software\Classes\rapiweb-print`.
-3. Crea acceso directo en el menu Inicio (configurar / probar).
-4. Lanza el `.exe` en modo `--config` para que el cliente elija impresora al instalar.
+2. Copia `protocol-runner.vbs`, `config-ui.ps1` e icono.
+3. Registra el protocolo `rapiweb-print://` en `HKCU\Software\Classes\rapiweb-print`, apuntando a `wscript.exe protocol-runner.vbs "%1"` para que la impresion ocurra sin ventana de consola.
+4. Crea accesos directos en el menu Inicio (configurar / probar).
+5. Lanza la ventana grafica de configuracion para que el cliente elija impresora al instalar.
 
 ## Compatibilidad con la v1
 
