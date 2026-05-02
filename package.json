@@ -1,0 +1,21 @@
+{
+  "name": "rapiweb-print-assistant",
+  "version": "2.0.0",
+  "description": "RapiWeb Print Assistant v2 - Handler del protocolo rapiweb-print:// para impresion termica desde el panel web sin requerir servidor HTTP local.",
+  "main": "src/index.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.mjs",
+    "dev": "node src/index.mjs",
+    "build:bundle": "esbuild src/index.mjs --bundle --platform=node --target=node18 --format=cjs --legal-comments=none --outfile=dist/print-assistant.cjs",
+    "build:exe": "npm run build:bundle && pkg dist/print-assistant.cjs --targets node18-win-x64 --output dist/RapiWebPrintAssistant.exe",
+    "pack": "npm run build:exe"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "pkg": "^5.8.1"
+  },
+  "pkg": {
+    "outputPath": "dist"
+  }
+}

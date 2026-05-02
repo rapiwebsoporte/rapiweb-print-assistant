@@ -1,0 +1,8 @@
+node_modules/
+dist/
+config.json
+*.log
+
+# Instalador compilado: se distribuye desde rapiweb-landing/public/downloads/
+# Para regenerarlo seguir las instrucciones de installer/README.md
+installer/output/
