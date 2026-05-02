@@ -5,7 +5,7 @@
 
 #define MyAppName        "RapiWeb Print Assistant"
 #define MyAppShortName   "RapiWebPrintAssistant"
-#define MyAppVersion     "2.1.1"
+#define MyAppVersion     "2.1.2"
 #define MyAppPublisher   "RapiWeb"
 #define MyAppURL         "https://rapiweb.ar"
 #define MyAppExeName     "RapiWebPrintAssistant.exe"
@@ -56,10 +56,10 @@ Source: "config-ui.ps1"; DestDir: "{app}"; Flags: ignoreversion
 Source: "RapiWebPrintAssistant.ico"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\config-ui.ps1"""; IconFilename: "{app}\RapiWebPrintAssistant.ico"
-Name: "{group}\Configurar impresora"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\config-ui.ps1"""; IconFilename: "{app}\RapiWebPrintAssistant.ico"
+Name: "{group}\{#MyAppName}"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File ""{app}\config-ui.ps1"""; IconFilename: "{app}\RapiWebPrintAssistant.ico"
+Name: "{group}\Configurar impresora"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File ""{app}\config-ui.ps1"""; IconFilename: "{app}\RapiWebPrintAssistant.ico"
 Name: "{group}\Probar impresion"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--test"; IconFilename: "{app}\RapiWebPrintAssistant.ico"
-Name: "{userdesktop}\{#MyAppName}"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\config-ui.ps1"""; IconFilename: "{app}\RapiWebPrintAssistant.ico"; Tasks: desktopicon
+Name: "{userdesktop}\{#MyAppName}"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File ""{app}\config-ui.ps1"""; IconFilename: "{app}\RapiWebPrintAssistant.ico"; Tasks: desktopicon
 
 [Registry]
 ; Registrar el protocolo personalizado rapiweb-print:// para el USUARIO ACTUAL
@@ -75,7 +75,7 @@ Root: HKCU; Subkey: "Software\Classes\{#MyProtocol}\shell\open\command"; ValueTy
 [Run]
 ; Al terminar la instalacion, abrimos la app en modo configuracion para que el
 ; cliente elija su impresora termica de inmediato.
-Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\config-ui.ps1"""; Description: "Configurar impresora ahora"; Flags: postinstall nowait skipifsilent
+Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File ""{app}\config-ui.ps1"""; Description: "Configurar impresora ahora"; Flags: postinstall nowait skipifsilent
 
 [UninstallDelete]
 Type: files; Name: "{app}\config.json"
